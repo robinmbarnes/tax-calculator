@@ -1,0 +1,1 @@
+var taxCalculatorAppModule = angular.module('taxCalculatorApp', []);

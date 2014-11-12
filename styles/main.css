@@ -1,0 +1,84 @@
+.panel-standard {
+    border: 1px solid #ddd;
+}
+
+.panel-standard .panel-heading {
+    background-color: rgb(26, 107, 55);
+    color: white;
+    font-weight: bold;
+}
+
+.panel-group-flowing .panel {
+    border-radius: 0;
+}
+
+.panel-group-flowing .panel+.panel {
+    margin: 0;
+}
+
+.panel-group-flowing .panel-standard {
+    border-top-width: 0;
+    border-bottom-width: 0;
+}
+
+.panel-group-flowing .panel-heading {
+    border-radius: 0;
+}
+
+.panel-group-flowing .panel:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.panel-group-flowing .panel:first-child .panel-heading {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.panel-group-flowing .panel:last-child {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.panel-group-flowing .panel-standard:first-child {
+    border-top-width: 1px;
+}
+
+.panel-group-flowing .panel-standard:last-child {
+    border-bottom-width: 1px;
+}
+
+.panel-results {
+    border: 1px solid #ddd;
+}
+
+.panel-results .panel-heading {
+    background-color: #40739E;
+    color: white;
+    font-weight: bold;
+}
+
+.input-row+.input-row {
+    margin-top: 15px;
+}
+
+label {
+    margin: 0;
+}
+.right-hand-side-label {
+    margin-left: 4px;
+}
+
+.standalone {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.push-to-top {
+    margin-top: 0;
+}
+
+.error {
+    background-color: #a94442;
+    color: white;
+}
