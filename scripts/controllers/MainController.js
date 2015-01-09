@@ -1,26 +1,17 @@
 taxCalculatorAppModule.controller(
   'MainController',
-  ['$scope', 'TaxCalculator', 'TaxCalculator2014Delegate', mainController]
+  ['$scope', 'TaxCalculator2014', 'TaxOutput', 'TaxInput', mainController]
 );
 
-function mainController ($scope, taxCalculator, taxCalculator2014Delegate) {
-  $scope.breakdown = {
-    grossSalary: 0.00,
-    nationalInsurance: 0.00,
-    studentLoan: 0.00,
-    pension: 0.00,
-    taxFreeAllowance: 0.00,
-    tax: 0.00,
-    totalDeductions: 0.00,
-    netSalary: 0.00
-  };
+function mainController ($scope, taxCalculator2014, taxOutput, taxInput) {
 
-  taxCalculator.setCalculationDelegate(taxCalculator2014Delegate);
+  $scope.taxOutput = taxOutput();
 
-  $scope.taxCalculator = taxCalculator;
+  $scope.taxInput = taxInput();
 
-  $scope.salary = 0;
-  $scope.pension = 0;
-  $scope.pensionType = '%';
-  $scope.breakdownTimePeriod = 0;
+  $scope.foo = 0;
+
+  $scope.doCalculation = function () {
+    $scope.taxOutput = taxCalculator2014($scope.taxInput);
+  }
 }

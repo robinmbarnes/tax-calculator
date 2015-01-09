@@ -154,4 +154,16 @@ describe("Personal Allowance Calculator 2014", function () {
     }
   );
 
+  it("throws when salary is not a valid currency amount", function () {
+    expect(function () {
+      personalAllowanceCalculator(100.002, 0, false, false);
+    }).toThrow();
+  });
+
+  it("throws when age group is outside valid range", function () {
+    expect(function () {
+      personalAllowanceCalculator(100.00, 4, false, false);
+    }).toThrow();
+  });
+
 });

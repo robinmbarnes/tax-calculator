@@ -5,15 +5,20 @@
   <meta charset="UTF-8">
   <script src="/scripts/vendor/angular-1.3.0.min.js"></script>
   <script src="/scripts/app.js"></script>
-  <script src="/scripts/controllers/MainController.js"></script>
   <script src="/scripts/services/DecimalValidator.js"></script>
-  <script src="/scripts/services/TaxAmountCalculator2014Delegate.js"></script>
-  <script src="/scripts/services/TaxCalculator.js"></script>
-  <script src="/scripts/services/TaxCalculator2014Delegate.js"></script>
+  <script src="/scripts/services/NationalInsuranceCalculator2014.js"></script>
+  <script src="/scripts/services/PersonalAllowanceCalculator2014.js"></script>
+  <script src="/scripts/services/Round.js"></script>
+  <script src="/scripts/services/StudentLoanCalculator2014.js"></script>
+  <script src="/scripts/services/TaxAmountCalculator2014.js"></script>
+  <script src="/scripts/services/TaxCalculator2014.js"></script>
+  <script src="/scripts/services/TaxInput.js"></script>
+  <script src="/scripts/services/TaxOutput.js"></script>
   <script src="/scripts/directives/rbDecimal.js"></script>
   <script src="/scripts/directives/tcNavPills.js"></script>
   <script src="/scripts/directives/tcNavPill.js"></script>
   <script src="/scripts/directives/rbErrorClass.js"></script>
+  <script src="/scripts/controllers/MainController.js"></script>
   <link rel="stylesheet" href="styles/vendor/boostrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles/main.css">
 </head>
@@ -32,8 +37,8 @@
             <div class="panel-body">
               <div class="input-group" rb-error-class="has-error">
                 <span class="input-group-addon">&pound;</span>
-                <input id="salary" ng-model="taxCalculator.grossSalaryAmount" type="text" name="salary"
-                       ng-pattern="/^(\d{1}|[1-9]\d+)(\.(?=\d{2})\d{2})?$/"
+                <input id="salary" ng-model="taxInput.grossSalary" type="text" name="salary"
+                       rb-decimal
                        ng-required="true"
                        class="form-control">
                 <span class="input-group-addon">Per year</span>
@@ -48,18 +53,18 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-3">
-                  <input type="radio" name="ageRnge" id="isUnder64" value="0"
-                         ng-model="taxCalculator.ageRange">
+                  <input type="radio" name="ageRange" id="isUnder64" value="0"
+                         ng-model="taxInput.ageRange">
                   <label for="isUnder60"  class="right-hand-side-label">Under 65</label>
                 </div>
                 <div class="col-md-3">
                   <input type="radio" name="ageRange" id="is65To75" value="1"
-                         ng-model="taxCalculator.ageRange">
+                         ng-model="taxInput.ageRange">
                   <label for="is65To75"  class="right-hand-side-label">65 - 75</label>
                 </div>
                 <div class="col-md-3">
                   <input type="radio" name="ageRange" id="isOver75" value="2"
-                         ng-model="taxCalculator.ageRange">
+                         ng-model="taxInput.ageRange">
                   <label for="isOver75"  class="right-hand-side-label">Over 75</label>
                 </div>
               </div>
@@ -73,15 +78,15 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-3">
-                  <input type="checkbox" id="isMarried">
+                  <input type="checkbox" id="isMarried" ng-model="taxInput.isMarried">
                   <label for="isMarried"  class="right-hand-side-label">I am married</label>
                 </div>
                 <div class="col-md-3">
-                  <input type="checkbox" id="isBlind">
+                  <input type="checkbox" id="isBlind" ng-model="taxInput.isBlind">
                   <label for="isBlind" class="right-hand-side-label">I am blind</label>
                 </div>
                 <div class="col-md-4">
-                  <input type="checkbox" id="isNiExempt">
+                  <input type="checkbox" id="isNiExempt" ng-model="taxInput.isExemptFromNationalInsurance">
                   <label for="isNiExempt" class="right-hand-side-label">I don't pay NI</label>
                 </div>
               </div>
@@ -94,24 +99,24 @@
             </div>
             <div class="panel-body">
               <div class="input-row">
-                <input type="checkbox" id="isStudentLoanIncluded">
+                <input type="checkbox" id="isStudentLoanIncluded" ng-model="taxInput.isRepayingStudentLoan">
                 <label for="isStudentLoanIncluded" class="right-hand-side-label">I am repaying my student loan</label>
               </div>
               <div class="input-group input-row" rb-error-class="has-error">
                     <span class="input-group-addon">
-                      <select name="pensionType" ng-model="pensionType">
+                      <select name="pensionType" ng-model="taxInput.pensionType">
                         <option value="%">Pension (% of salary)</option>
                         <option value="£">Pension (fixed amount)</option>
                       </select>
                     </span>
                 <input type="text" ng-model="pension" class="form-control" name="pension" rb-decimal>
-                <span class="input-group-addon" id="pensionTypeIndicator">{{ pensionType }}</span>
+                <span class="input-group-addon" id="pensionTypeIndicator">{{ taxInput.pensionType }}</span>
               </div>
             </div>
 
           </div>
         </div>
-        <button class="btn btn-block btn-success btn-lg standalone" ng-click="taxCalculator.calculate()">Calculate</button>
+        <button class="btn btn-block btn-success btn-lg standalone" ng-click="doCalculation()">Calculate</button>
       </ng-form>
     </div>
     <div class="col-md-6">
@@ -120,13 +125,7 @@
           The Breakdown
         </div>
         <div class="panel-body">
-<!--
-            <li class="active"><a href="#">Yearly</a></li>
-            <li><a href="#">Monthly</a></li>
-            <li><a href="#">Weekly</a></li>
-
--->
-          <tc-nav-pills ng-model="breakdownTimePeriod">
+          <tc-nav-pills ng-model="taxInput.timePeriod">
             <tc-nav-pill data-value="0">Yearly</tc-nav-pill>
             <tc-nav-pill data-value="1">Monthly</tc-nav-pill>
             <tc-nav-pill data-value="2">Weekly</tc-nav-pill>
@@ -136,35 +135,35 @@
             <tbody>
             <tr>
               <td>Gross Salary</td>
-              <td>{{ taxCalculator.grossSalaryAmount | currency : '&pound;' : 2 }}</td>
+              <td>{{ taxOutput.grossSalary | currency : '&pound;' : 2 }}</td>
             </tr>
             <tr>
               <td>National Insurance</td>
-              <td>&pound;0.00</td>
+              <td>{{ taxOutput.nationalInsurance | currency : '&pound;' : 2 }}</td>
             </tr>
             <tr>
               <td>Student Loan</td>
-              <td>&pound;0.00</td>
+              <td>{{ taxOutput.studentLoan | currency : '&pound;' : 2 }}</td>
             </tr>
             <tr>
               <td>Pension</td>
-              <td>&pound;0.00</td>
+              <td>{{ taxOutput.pension | currency : '&pound;' : 2 }}</td>
             </tr>
             <tr>
               <td>Tax Free Allowance</td>
-              <td>{{ taxCalculator.taxAmount | currency : '&pound;' : 2 }}</td>
+              <td>{{ taxOutput.personalAllowance | currency : '&pound;' : 2 }}</td>
             </tr>
             <tr>
               <td>Tax</td>
-              <td>&pound;0.00</td>
+              <td>{{ taxOutput.tax | currency : '&pound;' : 2 }}</td>
             </tr>
             <tr class="danger">
               <td>Total Deductions</td>
-              <td>&pound;0.00</td>
+              <td>{{ taxOutput.totalDeductions | currency : '&pound;' : 2 }}</td>
             </tr>
             <tr class="info">
               <td>Net Salary</td>
-              <td>&pound;0.00</td>
+              <td>{{ taxOutput.netSalary | currency : '&pound;' : 2 }}</td>
             </tr>
             </tbody>
           </table>
