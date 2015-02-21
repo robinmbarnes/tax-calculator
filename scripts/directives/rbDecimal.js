@@ -4,7 +4,8 @@ taxCalculatorAppModule.directive('rbDecimal', ['DecimalValidator', function (Dec
     require: 'ngModel',
     link: function (scope, element, attrs, controller) {
       controller.$parsers.unshift(function () {
-        controller.$setValidity('rbDecimal', DecimalValidator.isValid(element.val()));
+        var isValid = (controller.$pristine || DecimalValidator.isValid(element.val()));
+        controller.$setValidity('rbDecimal', isValid);
         return true;
       });
     }
