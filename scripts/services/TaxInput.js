@@ -1,7 +1,7 @@
-taxCalculatorAppModule.factory('TaxInput', function () {
+module.exports = function () {
   return function () {
     return {
-      grossSalary: null,
+      grossSalary: 0.00,
       pensionAmount: 0,
       ageRange: 0,
       pensionType: '%',
@@ -11,5 +11,5 @@ taxCalculatorAppModule.factory('TaxInput', function () {
       isRepayingStudentLoan: false,
       timePeriod: 0
     };
-  };
-});
+  }
+};

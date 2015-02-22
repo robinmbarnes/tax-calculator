@@ -1,4 +1,4 @@
-taxCalculatorAppModule.factory('StudentLoanCalculator2014', function () {
+module.exports = function () {
 
   var threshold = 16910.00;
   var rate = 0.09;
@@ -11,4 +11,4 @@ taxCalculatorAppModule.factory('StudentLoanCalculator2014', function () {
     return ((salaryOverThreshold * 100) * (rate * 100)) / 10000;
   }
 
-});
+};

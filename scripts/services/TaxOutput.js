@@ -1,4 +1,4 @@
-taxCalculatorAppModule.factory('TaxOutput', function () {
+module.exports = function () {
   return function() {
     return {
       grossSalary: 0,
@@ -11,5 +11,5 @@ taxCalculatorAppModule.factory('TaxOutput', function () {
       totalDeductions: 0
     };
   }
-});
+};
 

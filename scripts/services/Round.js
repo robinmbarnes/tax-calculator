@@ -1,4 +1,4 @@
-taxCalculatorAppModule.factory('Round', function () {
+module.exports = function () {
   return function round(value, precision, mode) {
     //  discuss at: http://phpjs.org/functions/round/
     // original by: Philip Peterson
@@ -58,4 +58,4 @@ taxCalculatorAppModule.factory('Round', function () {
 
     return (isHalf ? value : Math.round(value)) / m;
   };
-});
+};

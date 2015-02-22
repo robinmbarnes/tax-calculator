@@ -3,26 +3,11 @@
 <head>
   <title>Uk Income Tax Calculator</title>
   <meta charset="UTF-8">
-  <script src="/scripts/vendor/angular-1.3.0.min.js"></script>
-  <script src="/scripts/app.js"></script>
-  <script src="/scripts/services/DecimalValidator.js"></script>
-  <script src="/scripts/services/NationalInsuranceCalculator2014.js"></script>
-  <script src="/scripts/services/PersonalAllowanceCalculator2014.js"></script>
-  <script src="/scripts/services/Round.js"></script>
-  <script src="/scripts/services/StudentLoanCalculator2014.js"></script>
-  <script src="/scripts/services/TaxAmountCalculator2014.js"></script>
-  <script src="/scripts/services/TaxCalculator2014.js"></script>
-  <script src="/scripts/services/TaxInput.js"></script>
-  <script src="/scripts/services/TaxOutput.js"></script>
-  <script src="/scripts/directives/rbDecimal.js"></script>
-  <script src="/scripts/directives/tcNavPills.js"></script>
-  <script src="/scripts/directives/tcNavPill.js"></script>
-  <script src="/scripts/directives/rbErrorClass.js"></script>
-  <script src="/scripts/controllers/MainController.js"></script>
+  <script src="/dist/js/0.0.1.tax-calculator.min.js"></script>
   <link rel="stylesheet" href="styles/vendor/boostrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="styles/main.css">
 </head>
-<body ng-controller="MainController">
+<body ng-controller="MainController" ng-cloak>
 <div class="container">
   <h1 class="page-header">Tax Calculator</h1>
   <div class="row">
@@ -109,7 +94,7 @@
                         <option value="£">Pension (fixed amount)</option>
                       </select>
                     </span>
-                <input type="text" ng-model="pension" class="form-control" name="pension" rb-decimal>
+                <input type="text" ng-model="taxInput.pensionAmount" class="form-control" name="pension" rb-decimal>
                 <span class="input-group-addon" id="pensionTypeIndicator">{{ taxInput.pensionType }}</span>
               </div>
             </div>

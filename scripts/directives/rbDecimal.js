@@ -1,4 +1,4 @@
-taxCalculatorAppModule.directive('rbDecimal', ['DecimalValidator', function (DecimalValidator) {
+module.exports = function (DecimalValidator) {
   return {
     restrict: 'A',
     require: 'ngModel',
@@ -6,8 +6,8 @@ taxCalculatorAppModule.directive('rbDecimal', ['DecimalValidator', function (Dec
       controller.$parsers.unshift(function () {
         var isValid = (controller.$pristine || DecimalValidator.isValid(element.val()));
         controller.$setValidity('rbDecimal', isValid);
-        return true;
+        return element.val();
       });
     }
   };
-}]);
+};

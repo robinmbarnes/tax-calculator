@@ -1,9 +1,8 @@
-taxCalculatorAppModule.controller(
-  'MainController',
-  ['$scope', 'TaxCalculator2014', 'TaxOutput', 'TaxInput', mainController]
-);
-
-function mainController ($scope, taxCalculator2014, taxOutput, taxInput) {
+module.exports = function mainController (
+  $scope,
+  taxCalculator2014,
+  taxOutput,
+  taxInput) {
 
   $scope.taxOutput = taxOutput();
 
@@ -11,7 +10,7 @@ function mainController ($scope, taxCalculator2014, taxOutput, taxInput) {
 
   $scope.foo = 0;
 
-  $scope.doCalculation = function () {
+  $scope.doCalculation = function () {console.log($scope.taxInput);
     $scope.taxOutput = taxCalculator2014($scope.taxInput);
   }
 }

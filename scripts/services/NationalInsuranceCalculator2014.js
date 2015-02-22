@@ -1,4 +1,4 @@
-taxCalculatorAppModule.factory('NationalInsuranceCalculator2014', function () {
+module.exports = function () {
 
   var ranges = [
     {
@@ -38,4 +38,4 @@ taxCalculatorAppModule.factory('NationalInsuranceCalculator2014', function () {
       return (nationalInsuranceAmount / 100);
     }, 0.00);
   };
-});
+};

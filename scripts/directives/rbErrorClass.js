@@ -1,4 +1,4 @@
-taxCalculatorAppModule.directive('rbErrorClass', function () {
+module.exports = function () {
 
   function getElementAndDescendants(element) {
     element = angular.element(element);
@@ -41,4 +41,4 @@ taxCalculatorAppModule.directive('rbErrorClass', function () {
       });
     }
   }
-});
+};
